@@ -4,8 +4,13 @@
     'category': 'Productivity',
     'website': 'https://collaboraonline.com',
     'depends': [
-
+        "base"
     ],
+    "external_dependencies": {
+        "python": [
+            "pyjwt"
+        ]
+    },
     'data': [
         'views/res_config_settings_views.xml',
     ],

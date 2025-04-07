@@ -14,6 +14,9 @@ class CoolWopiController(odoo.http.Controller):
         if 'error' in token:
             return request.make_response(data="Permission denied: {}".format(token['error']), status=401)
 
+        if token['attachment_id'] is not attachment_id:
+            return request.make_response("Permission denied. Token invalid for file.", status=403)
+
         attachments = request.env['ir.attachment'].with_user(token['user'])
         attachment = attachments.browse([attachment_id]).exists()
         if attachment is None:
@@ -38,20 +41,17 @@ class CoolWopiController(odoo.http.Controller):
             status=200,
         )
 
-    def get_file_content(self, attachment_id):
-        attachments = request.env['ir.attachment']
+    def get_file_content(self, attachment_id, user):
+        attachments = request.env['ir.attachment'].with_user(user)
         attachment = attachments.browse([attachment_id]).exists().ensure_one()
         if attachment is None:
             return request.not_found()
 
-        if not attachment.has_access("read"):
-            return request.make_response("Permission denied.", status=403)
+        #if not attachment.has_access("read"):
+        #    return request.make_response("Permission denied.", status=403)
 
-        return request.make_response(
-            data="Hello world",
-            status=200,
-            headers=[("Content-Type", "text/plain")]
-        )
+        stream = request.env["ir.binary"]._get_stream_from(attachment, "raw", None, "name", None)
+        return stream.get_response(**{"max_age": None})
 
     def put_file_content(self, attachment_id):
         return request.make_response(
@@ -67,9 +67,12 @@ class CoolWopiController(odoo.http.Controller):
         if 'error' in token:
             return request.make_response(data="Permission denied: {}".format(token['error']), status=401)
 
+        if token['attachment_id'] is not attachment_id:
+            return request.make_response("Permission denied. Token invalid for file.", status=403)
+
         if request.httprequest.method == "GET":
-            return self.get_file_content(token.attachment_id)
+            return self.get_file_content(attachment_id, token['user'])
         elif request.httprequest.method == "POST":
-            return self.put_file_content(token.attachment_id)
+            return self.put_file_content(attachment_id, token['user'])
         else:
             return request.make_response(data="Error", status=500)

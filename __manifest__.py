@@ -4,7 +4,8 @@
     'category': 'Productivity',
     'website': 'https://collaboraonline.com',
     'depends': [
-        "base"
+        "base",
+        "mail"
     ],
     "external_dependencies": {
         "python": [
@@ -14,6 +15,16 @@
     'data': [
         'views/res_config_settings_views.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'collabora_odoo/static/src/components/*/*.xml',
+            'collabora_odoo/static/src/models/*.js',
+        ],
+    },
+    'images': [
+        'static/description/icon.svg'
+    ],
+
     'installable': True,
     'application': True,
     'author': 'Collabora Productivity',

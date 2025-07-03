@@ -22,6 +22,7 @@ patch(AttachmentList.prototype, {
     },
 
     coolOpen(attachment) {
-        console.log("coolOpen called");
+        console.log(`coolOpen called to open ${attachment.id}`);
+        window.open(`/collabora_odoo/frame/${attachment.id}`, "_blank");
     }
 });

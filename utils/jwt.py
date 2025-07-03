@@ -42,3 +42,27 @@ def verify_token(request, token):
         'attachment_id': attachment_id,
     }
     return res
+
+def make_token(request, user_id, attachment_id, exp):
+    jwt_payload = {
+        'fid': attachment_id,
+        'uid': user_id,
+        'exp': exp,
+    }
+
+    secret = request.env["ir.config_parameter"].sudo().get_param('cool_jwt_secret')
+    if secret is None:
+        return {
+            'error': 'JWT is not configured.'
+        }
+
+    try:
+        token = jwt.encode(jwt_payload, secret, algorithm='HS256')
+    except Exception as e:
+        return {
+            'error': e
+        }
+
+    return {
+        'token': token
+    }

@@ -13,6 +13,7 @@
         ]
     },
     'data': [
+        'views/templates.xml',
         'views/res_config_settings_views.xml',
     ],
     'assets': {
@@ -20,6 +21,10 @@
             'collabora_odoo/static/src/components/*/*.xml',
             'collabora_odoo/static/src/models/*.js',
         ],
+        'web.assets_frontend': [
+            'collabora_odoo/static/src/cool/js/*',
+            'collabora_odoo/static/src/cool/css/*',
+        ]
     },
     'images': [
         'static/description/icon.svg'

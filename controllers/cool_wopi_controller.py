@@ -11,7 +11,7 @@ from odoo.addons.collabora_odoo.utils import jwt, discover
 class CoolWopiController(odoo.http.Controller):
     # maybe use bearer
     @http.route('/collabora_odoo/wopi/files/<int:attachment_id>', auth='public')
-    def file_info(self, attachment_id, access_token):
+    def file_info(self, attachment_id, access_token, access_token_ttl=0):
         token = jwt.verify_token(request, access_token)
         if 'error' in token:
             return request.make_response(data="Permission denied: {}".format(token['error']), status=401)
@@ -66,7 +66,7 @@ class CoolWopiController(odoo.http.Controller):
 
     # CSRF is disabled as this uses the access_token to authenticate
     @http.route('/collabora_odoo/wopi/files/<int:attachment_id>/contents', auth='public', methods=["GET", "POST"], csrf=False)
-    def file_content(self, attachment_id, access_token):
+    def file_content(self, attachment_id, access_token, access_token_ttl=0):
         token = jwt.verify_token(request, access_token)
         if 'error' in token:
             return request.make_response(data="Permission denied: {}".format(token['error']), status=401)

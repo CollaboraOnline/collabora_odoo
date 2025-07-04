@@ -33,12 +33,20 @@ class CoolWopiController(odoo.http.Controller):
         if not can_read:
             return request.make_response(data="Permission denied.", status=403)
         can_write = attachment.check_access_rights('write', raise_exception=False)
-
+        user_name = token['user'].display_name
+        email = token['user'].email
+        web_root = request.env['ir.config_parameter'].sudo().get_param('cool_wopi_host_url')
         res = {
             'BaseFileName': attr['name'],
             'Size': attr['file_size'],
             'UserId': token['user_id'],
+            'UserFriendlyName': user_name,
             'UserCanWrite': can_write,
+            'UserExtraInfo': {
+                'avatar': '{}/web/image?model=res.users&field=avatar_128&id={}'.format(web_root, token['user_id']),
+                'mail': email,
+            },
+            'IsAdminUser': True,
         }
         return request.make_json_response(
             data=res,

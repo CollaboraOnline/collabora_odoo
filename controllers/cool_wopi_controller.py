@@ -110,7 +110,10 @@ class CoolWopiController(odoo.http.Controller):
         wopi_src = request.env["ir.config_parameter"].sudo().get_param('cool_wopi_host_url')
         wopi_src += "/collabora_odoo/wopi/files/" + str(attachment_id)
         try:
-            wopi_client = discover.collabora_url(request.env["ir.config_parameter"].sudo().get_param('cool_public_url'), attributes['mimetype'])
+            config = request.env["ir.config_parameter"].sudo()
+            disable_verify_cert = bool(config.get_param('cool_disable_cert_check'))
+            wopi_client = discover.collabora_url(config.get_param('cool_public_url'), attributes['mimetype'],
+                                                 disable_verify_cert)
         except Exception as e:
             return request.make_response(data="Error getting discovery file: {}.".format(e), status=500)
 

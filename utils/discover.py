@@ -1,13 +1,12 @@
 import requests
 from lxml import etree
 
-def collabora_url(server, mime_type):
+def collabora_url(server, mime_type, disable_verify_cert=False):
     #
     # WARNING: `disable_verify_cert` should never be `True` on a production server.
     # This is only done to allow the use of self signed certificates on the Collabora
     # Online server for example purpose.
     #
-    disable_verify_cert = True
 
     response = requests.get(server + '/hosting/discovery', verify=not disable_verify_cert)
     discovery = response.text

@@ -12,6 +12,9 @@
                         <setting id="collabora_odoo" string="Collabora Online Server URL">
                           <field name="cool_public_url" placeholder="https://collabora-online.example.com:9980/"/>
                         </setting>
+                        <setting id="collabora_odoo" string="Disable certificate checks (for development only)">
+                          <field name="cool_disable_cert_check"/>
+                        </setting>
                         <setting id="collabora_odoo" string="Odoo URL">
                           <field name="cool_wopi_host_url" placeholder="https://odoo.example.com/"/>
                         </setting>

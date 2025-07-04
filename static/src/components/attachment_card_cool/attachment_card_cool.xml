@@ -2,7 +2,9 @@
 <templates xml:space="preserve">
     <t t-inherit="mail.AttachmentList" t-inherit-mode="extension">
         <xpath expr="//div[hasclass('o-mail-AttachmentCard-aside')]" position="before">
-          <button t-if="isCoolAttachment(attachment)" t-on-click="() => this.coolOpen(attachment)">
+          <button t-if="isCoolAttachment(attachment)" t-on-click="() => this.coolOpen(attachment)"
+                  class="btn d-flex align-items-center justify-content-center h-100 rounded-0"
+          >
             <img src="/collabora_odoo/static/description/icon.svg" aria-label="Open in Collabora Online" />
           </button>
         </xpath>

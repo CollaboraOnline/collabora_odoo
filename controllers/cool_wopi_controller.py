@@ -16,7 +16,7 @@ class CoolWopiController(odoo.http.Controller):
         if 'error' in token:
             return request.make_response(data="Permission denied: {}".format(token['error']), status=401)
 
-        if token['attachment_id'] is not attachment_id:
+        if token['attachment_id'] != attachment_id:
             return request.make_response("Permission denied. Token invalid for file.", status=403)
 
         attachments = request.env['ir.attachment'].with_user(token['user'])
@@ -65,7 +65,18 @@ class CoolWopiController(odoo.http.Controller):
         stream = request.env["ir.binary"]._get_stream_from(attachment, "raw", None, "name", None)
         return stream.get_response(**{"max_age": None})
 
-    def put_file_content(self, attachment_id):
+    def put_file_content(self, attachment_id, user):
+        attachments = request.env['ir.attachment'].with_user(user)
+        attachment = attachments.browse([attachment_id]).exists().ensure_one()
+        if attachment is None:
+            return request.not_found()
+
+        if not attachment.check_access_rights('write', raise_exception=False):
+            return request.make_response("Permission denied.", status=403)
+
+        attributes = attachment.read(['mimetype'])[0]
+
+        attachment.write({"raw": request.httprequest.get_data(as_text=False), "mimetype": attributes['mimetype']})
         return request.make_response(
             data="Saved",
             status=200,
@@ -79,7 +90,7 @@ class CoolWopiController(odoo.http.Controller):
         if 'error' in token:
             return request.make_response(data="Permission denied: {}".format(token['error']), status=401)
 
-        if token['attachment_id'] is not attachment_id:
+        if token['attachment_id'] != attachment_id:
             return request.make_response("Permission denied. Token invalid for file.", status=403)
 
         if request.httprequest.method == "GET":

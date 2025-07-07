@@ -36,18 +36,22 @@ def verify_token(request, token):
             'error': 'User not found.'
         }
 
+    can_write = 'wri' in jwt_payload and jwt_payload['wri']
+
     res = {
         'user': user,
         'user_id': user_id,
         'attachment_id': attachment_id,
+        'can_write': can_write,
     }
     return res
 
-def make_token(request, user_id, attachment_id, exp):
+def make_token(request, user_id, attachment_id, exp, can_write=False):
     jwt_payload = {
         'fid': attachment_id,
         'uid': user_id,
         'exp': exp,
+        'wri': can_write,
     }
 
     secret = request.env["ir.config_parameter"].sudo().get_param('cool_jwt_secret')

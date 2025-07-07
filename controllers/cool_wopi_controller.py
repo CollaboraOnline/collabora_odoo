@@ -33,6 +33,8 @@ class CoolWopiController(odoo.http.Controller):
         if not can_read:
             return request.make_response(data="Permission denied.", status=403)
         can_write = attachment.check_access_rights('write', raise_exception=False)
+        if not token['can_write']:
+            can_write = False
         user_name = token['user'].display_name
         email = token['user'].email
         web_root = request.env['ir.config_parameter'].sudo().get_param('cool_wopi_host_url')
@@ -96,6 +98,8 @@ class CoolWopiController(odoo.http.Controller):
         if request.httprequest.method == "GET":
             return self.get_file_content(attachment_id, token['user'])
         elif request.httprequest.method == "POST":
+            if token['can_write'] != True:
+                return request.make_response("Permission denied.", status=403)
             return self.put_file_content(attachment_id, token['user'])
         else:
             return request.make_response(data="Error, invalid method.", status=500)
@@ -111,6 +115,7 @@ class CoolWopiController(odoo.http.Controller):
             return request.not_found()
 
         attributes = attachment.read(['name', 'mimetype'])[0]
+        want_write = attachment.check_access_rights('write', raise_exception=False)
 
         access_token_ttl = int(request.env["ir.config_parameter"].sudo().get_param('cool_jwt_ttl'))
         if access_token_ttl == 0:
@@ -118,7 +123,7 @@ class CoolWopiController(odoo.http.Controller):
         exp = int(time.time()) + access_token_ttl
 
         user_id = request.env.user.id
-        token_data = jwt.make_token(request, user_id, attachment_id, exp)
+        token_data = jwt.make_token(request, user_id, attachment_id, exp, want_write)
 
         if 'error' in token_data:
             return request.make_response(data="Error: {}".format(token_data['error']), status=500)

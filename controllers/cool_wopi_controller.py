@@ -27,7 +27,7 @@ class CoolWopiController(odoo.http.Controller):
         if attachment is None:
             return request.not_found()
 
-        attr = attachment.read(['file_size', 'name'])[0]
+        attr = attachment.read(['file_size', 'name', 'write_date'])[0]
 
         can_read = attachment.check_access_rights('read', raise_exception=False)
         if not can_read:
@@ -41,6 +41,7 @@ class CoolWopiController(odoo.http.Controller):
         res = {
             'BaseFileName': attr['name'],
             'Size': attr['file_size'],
+            'LastModifiedTime': attr['write_date'].isoformat(),
             'UserId': token['user_id'],
             'UserFriendlyName': user_name,
             'UserCanWrite': can_write,

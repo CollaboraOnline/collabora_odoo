@@ -80,10 +80,16 @@ class CoolWopiController(odoo.http.Controller):
         attributes = attachment.read(['mimetype'])[0]
 
         attachment.write({"raw": request.httprequest.get_data(as_text=False), "mimetype": attributes['mimetype']})
-        return request.make_response(
-            data="Saved",
+
+        attributes = attachment.read(['write_date'])[0]
+
+        res = {
+            'LastModifiedTime': attributes['write_date'].isoformat(),
+        }
+
+        return request.make_json_response(
+            data=res,
             status=200,
-            headers=[("Content-Type", "text/plain")]
         )
 
     # CSRF is disabled as this uses the access_token to authenticate

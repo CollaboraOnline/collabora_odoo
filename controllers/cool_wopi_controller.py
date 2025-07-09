@@ -146,7 +146,7 @@ class CoolWopiController(odoo.http.Controller):
             "attachment_id": str(attachment_id),
             "access_token": access_token,
             "access_token_ttl": str(access_token_ttl),
-            "closebutton": "true",
+            "closebutton": "false",
             "iframe_style": "",
             "wopi_client": wopi_client,
             "wopi_src": urllib.parse.quote_plus(wopi_src),

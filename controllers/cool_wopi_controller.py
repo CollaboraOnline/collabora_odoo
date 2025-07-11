@@ -46,11 +46,13 @@ class CoolWopiController(odoo.http.Controller):
             'UserId': token['user_id'],
             'UserFriendlyName': user_name,
             'UserCanWrite': can_write,
+            'UserCanNotWriteRelative': True,
             'UserExtraInfo': {
                 'avatar': '{}/web/image?model=res.users&field=avatar_128&id={}'.format(web_root, token['user_id']),
                 'mail': email,
             },
             'IsAdminUser': True,
+            'IsAnonymousUser': False,
         }
         return request.make_json_response(
             data=res,

@@ -3,6 +3,7 @@ import odoo
 import json
 import time
 import urllib
+import datetime
 
 from odoo import http
 from odoo.http import request
@@ -77,7 +78,22 @@ class CoolWopiController(odoo.http.Controller):
         if not attachment.check_access_rights('write', raise_exception=False):
             return request.make_response("Permission denied.", status=403)
 
-        attributes = attachment.read(['mimetype'])[0]
+        attributes = attachment.read(['mimetype', 'write_date'])[0]
+        cool_timestamp = request.httprequest.headers.get('X-COOL-WOPI-Timestamp')
+        if cool_timestamp:
+            try:
+                cool_timestamp = datetime.datetime.fromisoformat(cool_timestamp);
+            except:
+                cool_timestamp = None
+        if cool_timestamp and attributes['write_date'] != cool_timestamp:
+            res = {
+                'COOLStatusCode': 1010
+            }
+            return request.make_json_response(
+                data=res,
+                status=409,
+            )
+
 
         attachment.write({"raw": request.httprequest.get_data(as_text=False), "mimetype": attributes['mimetype']})
 

@@ -145,10 +145,10 @@ class CoolWopiController(odoo.http.Controller):
         access_token_ttl = int(request.env["ir.config_parameter"].sudo().get_param('cool_jwt_ttl'))
         if access_token_ttl == 0:
             access_token_ttl = 86400
-        exp = int(time.time()) + access_token_ttl
+        access_token_ttl = int(time.time()) + access_token_ttl
 
         user_id = request.env.user.id
-        token_data = jwt.make_token(request, user_id, attachment_id, exp, want_write)
+        token_data = jwt.make_token(request, user_id, attachment_id, access_token_ttl, want_write)
 
         if 'error' in token_data:
             return request.make_response(data="Error: {}".format(token_data['error']), status=500)
@@ -169,7 +169,7 @@ class CoolWopiController(odoo.http.Controller):
         return request.render("collabora_odoo.cool_frame", {
             "attachment_id": str(attachment_id),
             "access_token": access_token,
-            "access_token_ttl": str(access_token_ttl),
+            "access_token_ttl": str(access_token_ttl * 1000),
             "closebutton": "false",
             "iframe_style": "",
             "wopi_client": wopi_client,

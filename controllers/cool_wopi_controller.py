@@ -24,8 +24,13 @@ class CoolWopiController(odoo.http.Controller):
         attachment = attachments.browse([attachment_id]).exists()
         if attachment is None:
             return request.not_found()
-        attachment = attachment.ensure_one()
-        if attachment is None:
+        try:
+            attachment = attachment.ensure_one()
+            if attachment is None:
+                return request.not_found()
+        except Exception as e:
+            # If the file disappear or something an exception is raised.
+            # Return not found.
             return request.not_found()
 
         attr = attachment.read(['file_size', 'name', 'write_date'])[0]
@@ -61,8 +66,13 @@ class CoolWopiController(odoo.http.Controller):
 
     def get_file_content(self, attachment_id, user):
         attachments = request.env['ir.attachment'].with_user(user)
-        attachment = attachments.browse([attachment_id]).exists().ensure_one()
-        if attachment is None:
+        try:
+            attachment = attachments.browse([attachment_id]).exists().ensure_one()
+            if attachment is None:
+                return request.not_found()
+        except Exception as e:
+            # If the file disappear or something an exception is raised.
+            # Return not found.
             return request.not_found()
 
         if not attachment.check_access_rights('read', raise_exception=False):
@@ -73,8 +83,13 @@ class CoolWopiController(odoo.http.Controller):
 
     def put_file_content(self, attachment_id, user):
         attachments = request.env['ir.attachment'].with_user(user)
-        attachment = attachments.browse([attachment_id]).exists().ensure_one()
-        if attachment is None:
+        try:
+            attachment = attachments.browse([attachment_id]).exists().ensure_one()
+            if attachment is None:
+                return request.not_found()
+        except Exception as e:
+            # If the file disappear or something an exception is raised.
+            # Return not found.
             return request.not_found()
 
         if not attachment.check_access_rights('write', raise_exception=False):
@@ -135,8 +150,13 @@ class CoolWopiController(odoo.http.Controller):
         attachment = attachments.browse([attachment_id]).exists()
         if attachment is None:
             return request.not_found()
-        attachment = attachment.ensure_one()
-        if attachment is None:
+        try:
+            attachment = attachment.ensure_one()
+            if attachment is None:
+                return request.not_found()
+        except Exception as e:
+            # If the file disappear or something an exception is raised.
+            # Return not found.
             return request.not_found()
 
         attributes = attachment.read(['name', 'mimetype'])[0]

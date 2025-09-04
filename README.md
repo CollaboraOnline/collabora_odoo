@@ -19,6 +19,12 @@ For more information see https://collaboraonline.com/
 SECURITY NOTE: The plugin hasn't gone through a security review
 yet.
 
+## Versioning
+
+Understanding the versioning is important. The first digit in the
+version number (17.x.x.x) are the version of Odoo the module is
+compatible with. In this case it's Odoo 17.
+
 ## Configuration
 
 Once the plugin is installed you can set the configuration using the

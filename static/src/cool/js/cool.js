@@ -1,3 +1,4 @@
+/** @odoo-module **/
 /* -*- js-indent-level: 4 -*- */
 /*
  * Copyright the Collabora Online contributors.
@@ -9,7 +10,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-function loadDocument(wopiClient, wopiSrc, options = null) {
+export function loadDocument(wopiClient, wopiSrc, options = null) {
     let hasCloseButton = false;
     let wopiUrl = `${wopiClient}WOPISrc=${wopiSrc}`;
     if (options && options.closebutton == true) {

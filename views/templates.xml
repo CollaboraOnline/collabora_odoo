@@ -22,12 +22,13 @@
                   allow="clipboard-read *; clipboard-write *">
           </iframe>
           <script type="text/ecmascript">
+            let cool = odoo.loader.modules.get("@collabora_odoo/cool/js/cool");
             let closebutton = <t t-if='closebutton == "true"'>'true'</t><t t-else="">'false'</t>;
             let options = null;
             if (closebutton == 'true') {
                 options = { closebutton: true };
             }
-            loadDocument('<t t-out="wopi_client" />', '<t t-out="wopi_src" />', options);
+            cool.loadDocument('<t t-out="wopi_client" />', '<t t-out="wopi_src" />', options);
           </script>
         </div>
       </body>

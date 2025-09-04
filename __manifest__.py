@@ -1,6 +1,6 @@
 {
     'name': 'Collabora Online',
-    'version': '17.0.0.1.0',
+    'version': '18.0.0.1.0',
     'category': 'Productivity',
     'website': 'https://collaboraonline.com',
     'description': """

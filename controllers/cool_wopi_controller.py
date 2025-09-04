@@ -35,10 +35,10 @@ class CoolWopiController(odoo.http.Controller):
 
         attr = attachment.read(['file_size', 'name', 'write_date'])[0]
 
-        can_read = attachment.check_access_rights('read', raise_exception=False)
+        can_read = attachment.has_access('read')
         if not can_read:
             return request.make_response(data="Permission denied.", status=403)
-        can_write = attachment.check_access_rights('write', raise_exception=False)
+        can_write = attachment.has_access('write')
         if not token['can_write']:
             can_write = False
         user_name = token['user'].display_name
@@ -75,7 +75,7 @@ class CoolWopiController(odoo.http.Controller):
             # Return not found.
             return request.not_found()
 
-        if not attachment.check_access_rights('read', raise_exception=False):
+        if not attachment.has_access('read'):
             return request.make_response("Permission denied.", status=403)
 
         stream = request.env["ir.binary"]._get_stream_from(attachment, "raw", None, "name", None)
@@ -92,7 +92,7 @@ class CoolWopiController(odoo.http.Controller):
             # Return not found.
             return request.not_found()
 
-        if not attachment.check_access_rights('write', raise_exception=False):
+        if not attachment.has_access('write'):
             return request.make_response("Permission denied.", status=403)
 
         attributes = attachment.read(['mimetype', 'write_date'])[0]
@@ -160,7 +160,7 @@ class CoolWopiController(odoo.http.Controller):
             return request.not_found()
 
         attributes = attachment.read(['name', 'mimetype'])[0]
-        want_write = attachment.check_access_rights('write', raise_exception=False)
+        want_write = attachment.has_access('write')
 
         access_token_ttl = int(request.env["ir.config_parameter"].sudo().get_param('cool_jwt_ttl'))
         if access_token_ttl == 0:

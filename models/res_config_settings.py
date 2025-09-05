@@ -32,7 +32,7 @@ class ResConfigSettings(models.TransientModel):
         res = super().get_values()
         get_param = self.env['ir.config_parameter'].sudo().get_param
         res['cool_public_url'] = get_param('cool_public_url')
-        res['cool_public_url'] = get_param('cool_public_url')
+        res['cool_disable_cert_check'] = get_param('cool_disable_cert_check')
         res['cool_wopi_host_url'] = get_param('cool_wopi_host_url')
         res['cool_jwt_secret'] = get_param('cool_jwt_secret')
         res['cool_jwt_ttl'] = get_param('cool_jwt_ttl')

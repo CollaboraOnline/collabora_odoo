@@ -3,6 +3,12 @@
     'version': '0.1.0',
     'category': 'Productivity',
     'website': 'https://collaboraonline.com',
+    'description': """
+    The Collabora Online module allow to open and collaboratively edit office documents
+    attached in Odoo in Collabora Online.
+
+    This module can use your existing setup of Collabora Online.
+    """,
     'depends': [
         "base",
         "mail"

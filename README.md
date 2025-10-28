@@ -4,14 +4,14 @@ This plugin allow the integration of Collabora Online with Odoo.
 
 What you need is:
 
-- Odoo (currently 17.0 is tested)
+- Odoo 17
 - Collabora Online. The latter can be run on any server that is
   accessible and that can access the Odoo server.
 
 Collabora Online is an online office suite based on LibreOffice. It is
 open source, and is meant to be hosted on premise. This Odoo module is
-designed to use Collabora Online to open and edit office files store
-in Odoo. It will use the user credential of your Odoo system to
+designed to use Collabora Online to open and edit office files stored
+in Odoo. It will use the user credentials from your Odoo system to
 determine access to the documents for collaboration.
 
 For more information see https://collaboraonline.com/
@@ -36,9 +36,10 @@ You can create a secret using the following shell command:
 
 ```shell
 head -c 64 /dev/urandom | base64 -w 0
+```
 
-- _Access Token Expiration_: In second the expiration of the token to
-  access the document. Default to 86400 seconds (24 hours).
+- _Access Token Expiration_: In seconds, the expiration of the token
+  to access the document. Defaults to 86400 seconds (24 hours).
 
 ## License
 

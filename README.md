@@ -22,7 +22,7 @@ yet.
 ## Versioning
 
 Understanding the versioning is important. The first digit in the
-version number (17.x.x.x) are the version of Odoo the module is
+version number (17.0.x.x.x) are the version of Odoo the module is
 compatible with. In this case it's Odoo 17.
 
 ## Configuration

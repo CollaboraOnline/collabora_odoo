@@ -47,6 +47,22 @@ head -c 64 /dev/urandom | base64 -w 0
 - _Access Token Expiration_: In seconds, the expiration of the token
   to access the document. Defaults to 86400 seconds (24 hours).
 
+## Screenshots
+
+A document attached to a discussion. This can be any attachment anywhere.
+
+![Attachment](./static/description/images/cool_attachment.png)
+
+The document being edited.
+
+![Document editing](./static/description/images/cool_edit_screenshot.png)
+
+## Reporting issues
+
+Please use the GitHub bug tracker to report issues:
+
+https://github.com/CollaboraOnline/collabora_odoo/issues
+
 ## License
 
 This plugin is published under the MPL-2.0 license.

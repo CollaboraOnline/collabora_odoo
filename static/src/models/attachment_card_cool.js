@@ -17,8 +17,16 @@ patch(AttachmentList.prototype, {
         return cool_extensions.includes(attachment.extension.toLowerCase());
     },
 
-    coolOpen(attachment) {
+    coolOpen(attachment, mode) {
+        // Any other value is "read"
+        switch (mode) {
+        case 'read':
+        case 'write':
+            break;
+        default:
+            mode = 'read';
+        }
         console.log(`coolOpen called to open ${attachment.id}`);
-        window.open(`/collabora_odoo/frame/${attachment.id}`, "_blank");
+        window.open(`/collabora_odoo/frame/${attachment.id}/${mode}`, "_blank");
     }
 });

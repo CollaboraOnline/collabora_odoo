@@ -144,8 +144,13 @@ class CoolWopiController(odoo.http.Controller):
         else:
             return request.make_response(data="Error, invalid method.", status=500)
 
-    @http.route('/collabora_odoo/frame/<int:attachment_id>', auth='user', website=True)
-    def cool_frame(self, attachment_id):
+    @http.route('/collabora_odoo/frame/<int:attachment_id>/<string:mode>', auth='user', website=True)
+    def cool_frame(self, attachment_id, mode):
+        if mode == 'write':
+            write = True
+        else:
+            write = False
+
         attachments = request.env['ir.attachment']
         attachment = attachments.browse([attachment_id]).exists()
         if attachment is None:
@@ -160,7 +165,7 @@ class CoolWopiController(odoo.http.Controller):
             return request.not_found()
 
         attributes = attachment.read(['name', 'mimetype'])[0]
-        want_write = attachment.check_access_rights('write', raise_exception=False)
+        want_write = write and attachment.check_access_rights('write', raise_exception=False)
 
         access_token_ttl = int(request.env["ir.config_parameter"].sudo().get_param('cool_jwt_ttl'))
         if access_token_ttl == 0:

@@ -30,5 +30,5 @@ class CollaboraDoc(models.Model):
             # Return not found.
             return json.dumps({'can_write': False, 'reason': 'exception {}'.format(e)})
 
-        can_write = attachment.check_access_rights('write', raise_exception=False)
+        can_write = attachment.check_access('write')
         return json.dumps({'can_write': can_write, 'reason': 'check access rights'})

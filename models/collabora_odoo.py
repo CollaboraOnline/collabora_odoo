@@ -20,15 +20,15 @@ class CollaboraDoc(models.Model):
         attachments = self.env['ir.attachment']
         attachment = attachments.browse([attachment_id]).exists()
         if attachment is None:
-            return json.dumps({'can_write': false, 'reason': 'attachment not found'})
+            return json.dumps({'can_write': False, 'reason': 'attachment not found'})
         try:
             attachment = attachment.ensure_one()
             if attachment is None:
-                return json.dumps({'can_write': false, 'reason': 'attachment no unique'})
+                return json.dumps({'can_write': False, 'reason': 'attachment no unique'})
         except Exception as e:
             # If the file disappear or something an exception is raised.
             # Return not found.
-            return json.dumps({'can_write': false, 'reason': 'exception {}'.format(e)})
+            return json.dumps({'can_write': False, 'reason': 'exception {}'.format(e)})
 
         can_write = attachment.check_access_rights('write', raise_exception=False)
         return json.dumps({'can_write': can_write, 'reason': 'check access rights'})

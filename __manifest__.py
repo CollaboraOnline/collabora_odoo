@@ -8,7 +8,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 {
     'name': 'Collabora Online',
-    'version': '18.0.0.2.0',
+    'version': '19.0.0.2.0',
     'category': 'Productivity',
     'website': 'https://collaboraonline.com',
     'description': """

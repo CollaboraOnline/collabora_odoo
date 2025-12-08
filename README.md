@@ -4,7 +4,7 @@ This plugin allow the integration of Collabora Online with Odoo.
 
 What you need is:
 
-- Odoo 18
+- Odoo 19
 - Collabora Online. The latter can be run on any server that is
   accessible and that can access the Odoo server.
 
@@ -22,8 +22,8 @@ yet.
 ## Versioning
 
 Understanding the versioning is important. The first digit in the
-version number (18.0.x.x.x) are the version of Odoo the module is
-compatible with. In this case it's Odoo 18.
+version number (19.0.x.x.x) are the version of Odoo the module is
+compatible with. In this case it's Odoo 19.
 
 ## Configuration
 

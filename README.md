@@ -53,6 +53,10 @@ A document attached to a discussion. This can be any attachment anywhere.
 
 ![Attachment](./static/description/images/cool_attachment.png)
 
+Hover with the mouse you can see the action buttons.
+
+![Attachment hover](./static/description/images/cool_attachment_hover.png)
+
 The document being edited.
 
 ![Document editing](./static/description/images/cool_edit_screenshot.png)

@@ -19,6 +19,9 @@ For more information see https://collaboraonline.com/
 SECURITY NOTE: The plugin hasn't gone through a security review
 yet.
 
+The plugin itself is inside the `collabora_odoo` directory to fit
+within the requirements of the Odoo store.
+
 ## Versioning
 
 Understanding the versioning is important. The first digit in the
@@ -51,11 +54,11 @@ head -c 64 /dev/urandom | base64 -w 0
 
 A document attached to a discussion. This can be any attachment anywhere.
 
-![Attachment](./static/description/images/cool_attachment.png)
+![Attachment](./collabora_odoo/static/description/images/cool_attachment.png)
 
 The document being edited.
 
-![Document editing](./static/description/images/cool_edit_screenshot.png)
+![Document editing](./collabora_odoo/static/description/images/cool_edit_screenshot.png)
 
 ## Reporting issues
 

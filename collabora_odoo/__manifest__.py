@@ -32,6 +32,7 @@
     ],
     'assets': {
         'web.assets_backend': [
+            'web/static/src/module_loader.js',
             'collabora_odoo/static/src/components/*/*.xml',
             'collabora_odoo/static/src/models/*.js',
         ],
